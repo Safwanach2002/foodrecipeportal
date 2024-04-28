@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+{% load static %}
+{% load custom_filters %}
+<html>
+
+<head>
+  <!-- Basic -->
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <!-- Mobile Metas -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <!-- Site Metas -->
+  <meta name="keywords" content="" />
+  <meta name="description" content="" />
+  <meta name="author" content="" />
+  <link rel="shortcut icon" href="{% static 'assets/images/favicon.png' %}" type="">
+
+  <!--title> EdibleEpic - Food Recipes </title-->
+  <title>{{ recipe.title }}</title>
+
+  <!-- bootstrap core css -->
+  <link rel="stylesheet" type="text/css" href="{% static 'assets/css/bootstrap.css' %}" />
+
+  <!--owl slider stylesheet -->
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" />
+  <!-- nice select  -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-nice-select/1.1.0/css/nice-select.min.css" integrity="sha512-CruCP+TD3yXzlvvijET8wV5WxxEh5H8P4cmz0RFbKK6FlZ2sYl3AEsKlLPHbniXKSrDdFewhbmBK5skbdsASbQ==" crossorigin="anonymous" />
+  <!-- font awesome style -->
+  <link href="{% static 'assets/css/font-awesome.min.css' %}" rel="stylesheet" />
+
+  <!-- Custom styles for this template -->
+  <link href="{% static 'assets/css/style.css' %}" rel="stylesheet" />
+  <!-- responsive style -->
+  <link href="{% static 'assets/css/responsive.css' %}" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <!--script src="https://www.youtube.com/iframe_api?api_key=YOUR_API_KEY"></script-->
+
+</head>
+
+<body class="sub_page">
+
+  <div class="hero_area">
+    <div class="bg-box">
+      <img src="{% static 'assets/images/hero-bg.jpg' %}" alt="">
+    </div>
+    <!-- header section strats -->
+    <header class="header_section">
+      <div class="container">
+        <nav class="navbar navbar-expand-lg custom_nav-container ">
+          <a class="navbar-brand" href="{% url 'home' %}">
+            <span>
+              EdibleEpic
+            </span>
+          </a>
+
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class=""> </span>
+          </button>
+
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav  mx-auto ">
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'home' %}">Home </a>
+              </li>
+              <li class="nav-item active">
+                <a class="nav-link" href="{% url 'new_recipes' %}">New Recipes </a>
+              </li>
+              <li class="nav-item dropdown">
+                <a href="" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" onclick="toggleDropdown()">Ingredients</a>
+                <div class="dropdown-content" id="ingredientsDropdown">
+                  <a href="{% url 'chicken' %}" class="dropdown-item">Chicken</a>
+                  <a href="{% url 'beef' %}" class="dropdown-item">Beef</a>
+                  <a href="{% url 'seafood' %}" class="dropdown-item">seafood</a>
+                  <a href="{% url 'fruits' %}" class="dropdown-item">Fruits</a>
+                  <a href="{% url 'vegetables' %}" class="dropdown-item">vegetables</a>
+                  <a href="#" class="view-more" onclick="showMoreIngredients()">View More</a>
+                  <div id="additionalIngredients" class="hidden-ingredients"></div>
+              </li>
+              <li class="nav-item"> 
+                <a class="nav-link" href="{% url 'about' %}">About</a>
+              </li>
+            </ul>
+            <form class="form-inline" method="GET" action="{% url 'search_results' %}">
+              {% csrf_token %}
+              {{ search_form.as_p }}
+              <div class="input-group">
+                <input type="search" name="search_query" class="form-control search-data" placeholder="search any recipe">
+                <div class="input-group-append">
+                  <button type="submit" class="fa fa-search"></button>
+                </div>
+              </div>
+            </form>
+            <div class="user_option" id="userOption">
+              <div class="user_link" id="userLink">
+                {% if user.is_authenticated %}
+                <a href="#" id="userIcon">
+                    <i class="fa fa-user" aria-hidden="true"></i>
+                </a>
+                {% else %}
+                <a href="{% url 'signin' %}">
+                  <i class="fa fa-user" aria-hidden="true"></i>
+                </a>
+                {% endif %}
+              </div>
+              {% if user.is_authenticated %}
+              <div class="user_details" id="userDetails" style="display: none;">
+                <p>Welcome, {{ user.username }}</p>
+                <p>Email: {{ user.email }}</p>
+                <a href="{% url 'signout' %}">Sign Out</a>
+              </div>
+              {% endif %}
+            </div>
+          </div>
+        </nav>
+      </div> 
+    </header>
+   <!-- end header section -->   
+
+  </div>
+
+<body  style="font-family: Arial, sans-serif; background-color: #f5f5f5; margin: 0; padding: 0;">
+
+    <div id="hello" style="max-width: 800px; margin: 20px auto; padding: 20px; background-color: #fff; border-radius: 5px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
+
+        <header style="text-align: center; margin-bottom: 20px;">
+            <h1 style="color: #333;">{{ recipe.title }}</h1>
+        </header>
+
+        <main style="margin-bottom: 30px;">
+
+            <div style="margin-bottom: 30px; border-bottom: 1px solid #ccc; padding-bottom: 20px;">
+                {% if recipe.image %}
+                    <img src="{{ recipe.image.url }}" alt="{{ recipe.title }}" style="max-width: 100%; height: auto; margin-bottom: 10px; border-radius: 5px;">
+                {% endif %}
+                <div style="margin-left: 20px;">
+                    <p style="color: #777;">{{ recipe.description }}</p>
+                    <p><strong>Cook Time:</strong> {{ recipe.cook_time }}</p>
+                    <p><strong>Prep Time:</strong> {{ recipe.preparation_time }}</p>
+                    <p><strong>Total Time:</strong> {{ recipe.total_time }}</p>
+                    <p><strong>Serves:</strong> {{ recipe.serves }}</p>
+                    <p><strong>Cuisine:</strong> {{ recipe.category.name }}</p>
+                    <p><strong>Ingredients:</strong></p>
+                    <ul style="margin-left: 20px;">
+                        {% for ingredient in recipe.ingredients.all %}
+                            <li>{{ ingredient }}</li>
+                        {% endfor %}
+                    </ul>
+                    <p><strong>Instructions:</strong></p>
+                    <p style="white-space: pre-wrap;">{{ recipe.instructions }}</p>
+                    {% if recipe.video_link %}
+                        <div id="player"></div>
+                        <!--div style="position: relative; padding-bottom: 56.25%; margin-bottom: 20px;">
+                            <iframe width="560" height="315" src="{{ recipe.video_link }}" frameborder="0" allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe>
+                        </div-->
+                    {% endif %}
+                </div>
+            </div>
+            
+            <script>
+                let player;
+                function onYouTubeIframeAPIReady() {
+                    player = new YT.Player('player', {
+                      height: '315',
+                      width: '560',
+                      videoId: '{{ recipe.video_id }}', 
+                      playerVars: {
+                          'autoplay': 0, // Set to 1 for autoplay
+                          'controls': 1, // Show player controls
+                          'rel': 0, // Disable related videos
+                      },
+                      events: {
+                          'onReady': onPlayerReady,
+                      }
+                    });
+                }
+                function onPlayerReady(event) {
+                  // Optional: Do something when the player is ready
+                }
+            </script>
+          
+            <hr>
+
+            <section style="margin-bottom: 20px;">
+                <h2 style="color: #555; margin-bottom: 10px;">Reviews</h2>
+                {% for review in reviews %}
+                    <div style="margin-bottom: 20px; border-bottom: 1px solid #ccc; padding-bottom: 10px;">
+                        <p>{{ review.content }}</p>
+                        <p><strong>User:</strong> {{ review.user.username }}</p>
+                        {% if review.rating %}
+                            <p><strong>Rating:</strong>
+                              {% for _ in review.rating_stars %}
+                                <i class="fas fa-star"></i>
+                              {% endfor %}
+                              {% for _ in review.empty_stars %}
+                                <i class="far fa-star"></i>
+                              {% endfor %}
+                            </p>
+                        {% else %}
+                          <p>No reviews yet....</p>
+                        {% endif %}
+                        <p><strong>Date:</strong> {{ review.created_at }}</p>
+                    </div>
+                {% empty %}
+                    <p>No reviews yet....</p>
+                {% endfor %}
+
+                <h3>Add Your Review</h3>
+                <form id="review-form" method="post" action="{% url 'add_review' %}">
+                  {% csrf_token %}
+                  <input type="hidden" name="recipe_id" value="{{ recipe.id }}">              
+                  {{ form.as_p }}
+                  <button type="submit">Submit Review</button>
+                </form>
+            </section>
+        </main>
+    </div>
+
+  <script>
+     document.getElementById('review-form').addEventListener('submit', function (e) {
+        e.preventDefault(); // Prevent default form submission
+
+        console.log('Form submitted via AJAX');
+
+        // Submit the form data via AJAX
+        fetch(this.action, {
+            method: 'POST',
+            body: new FormData(this),
+        })
+        .then(response => {
+            console.log('AJAX response received');
+            return response.text();
+        })
+        .then(data => {
+            console.log('Data received:', data);
+            // Replace the reviews section content with the updated content
+            document.getElementById('reviews-section').innerHTML = data;
+        })
+        .catch(error => console.error('Error:', error));
+    });
+  </script>
+
+<!-- footer section -->
+  <footer class="footer_section">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-4 footer-col">
+          <div class="footer_contact">
+            <h4>
+              Contact Us
+            </h4>
+            <div class="contact_link_box">
+              <!--a href="">
+                <i class="fa fa-map-marker" aria-hidden="true"></i>
+                <span>
+                  Location
+                </span>
+              </a-->
+              <a href="">
+                <i class="fa fa-phone" aria-hidden="true"></i>
+                <span>
+                  Call +01 1234567890
+                </span>
+              </a>
+              <a href="">
+                <i class="fa fa-envelope" aria-hidden="true"></i>
+                <span>
+                  edibleepic@gmail.com
+                </span>
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4 footer-col">
+          <div class="footer_detail">
+            <a href="" class="footer-logo">
+              EdibleEpic
+            </a>
+            <p>
+              Embark on a culinary journey with Edible Epic - where every recipe is a destination.
+            </p>
+            <div class="footer_social">
+              <a href="">
+                <i class="fab fa-facebook" aria-hidden="true"></i>
+              </a>
+              <a href="">
+                <i class="fab fa-twitter" aria-hidden="true"></i>
+              </a>
+              <a href="">
+                <i class="fab fa-instagram" aria-hidden="true"></i>
+              </a>
+              <a href="">
+                <i class="fab fa-pinterest" aria-hidden="true"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4 footer-col">
+          <h4>
+            Contents
+          </h4>
+          <a href="{% url 'new_recipes' %}">
+            New Recipies<br>
+          </a>
+          <a href="{% url 'ingredients' %}">
+            Ingredients<br>
+          </a>
+          <a href="{% url 'about' %}">
+            About<br>
+          </a>
+        </div>
+      </div>
+      <!--div class="footer-info">
+        <p>
+          &copy; <span id="displayYear"></span> All Rights Reserved By
+          <a href="https://html.design/">Free Html Templates</a><br><br>
+          &copy; <span id="displayYear"></span> Distributed By
+          <a href="https://themewagon.com/" target="_blank">ThemeWagon</a>
+        </p>
+      </div-->
+    </div>
+  </footer>
+  <!-- footer section -->
+
+  <!-- jQery -->
+  <script src="{% static 'assets/js/jquery-3.4.1.min.js' %}"></script>
+  <!-- popper js -->
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous">
+  </script>
+  <!-- bootstrap js -->
+  <script src="{% static 'assets/js/bootstrap.js' %}"></script>
+  <!-- owl slider -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js">
+  </script>
+  <!-- isotope js -->
+  <script src="https://unpkg.com/isotope-layout@3.0.4/dist/isotope.pkgd.min.js"></script>
+  <!-- nice select -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-nice-select/1.1.0/js/jquery.nice-select.min.js"></script>
+  <!-- custom js -->
+  <script src="{% static 'assets/js/custom.js' %}"></script>
+  <!-- Google Map -->
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCh39n5U-4IoWpsVGUHWdqB6puEkhRLdmI&callback=myMap">
+  </script>
+  <!-- End Google Map -->
+  <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
+  <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+  <script src="https://www.youtube.com/iframe_api"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</body>
+
+</html>

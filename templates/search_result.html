@@ -1,0 +1,53 @@
+<!-- search_results.html -->
+<!--DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Search Results</title>
+</head>
+<body>
+    <h1>Search Results for "{{ search_query }}"</h1>
+</body>
+</html-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Results</title>
+</head>
+<body>
+    <h1>Search Results</h1>
+
+    <!-- Search Form -->
+    <form class="form-inline" method="GET" action="{% url 'search_results' %}">
+        {% csrf_token %}
+        {{ search_form.as_p }}
+        <div class="input-group">
+            <input type="search" name="search_query" class="form-control search-data" placeholder="Search for recipes">
+            <div class="input-group-append">
+                <button type="submit" class="btn btn-primary">Search</button>
+            </div>
+        </div>
+    </form>
+
+    <hr>
+
+    <!-- Display Search Results -->
+    {% if recipes %}
+        <h2>Matching Recipes:</h2>
+        <ul>
+            {% for recipe in recipes %}
+                <li>{{ recipe.title }}</li>
+                <!-- Display other recipe details as needed -->
+                <li>Description: {{ recipe.description }}</li>
+                <li>Cook Time: {{ recipe.cook_time }}</li>
+                <li>Serves: {{ recipe.serves }}</li>
+                <!-- You can include more details like ingredients, instructions, etc. -->
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No recipes found.</p>
+    {% endif %}
+</body>
+</html>

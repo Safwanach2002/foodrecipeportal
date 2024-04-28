@@ -1,0 +1,32 @@
+from django.urls import path
+from .import views
+
+urlpatterns=[
+    path('',views.home, name='home'),
+    path('new-recipes/', views.new_recipes, name='new_recipes'),
+    path('ingredients/', views.ingredients, name='ingredients'),
+    path('about/', views.about, name='about'),
+    path('search_results/', views.search_results, name='search_results'),
+    path('chicken/', views.chicken, name='chicken'),
+    path('beef/', views.beef, name='beef'),
+    path('seafood/', views.seafood, name='seafood'),
+    path('fruits/', views.fruits, name='fruits'),
+    path('vegetables/', views.vegetables, name='vegetables'),
+    path('categories/', views.CategoryListCreate.as_view(), name='category-list-create'),
+    path('ingredients/', views.IngredientListCreate.as_view(), name='ingredient-list-create'),
+    path('recipes/', views.RecipeListCreate.as_view(), name='recipe-list-create'),
+    path('reviews/', views.ReviewListCreate.as_view(), name='review-list-create'),
+    path('indianfood/', views.indianfood, name='indianfood'),
+    path('chinesefood/', views.chinesefood, name='chinesefood'),
+    path('itlianfood/', views.italianfood, name='italianfood'),
+    path('mexicanfood/', views.mexicanfood, name='mexicanfood'),
+    path('koreanfood/', views.koreanfood, name='koreanfood'),
+    path('spanishfood/', views.spanishfood, name='spanishfood'),
+    path('japanesefood/', views.japanesefood, name='japanesefood'),
+    path('vietnamesefood/', views.vietnamesefood, name='vietnamesefood'),
+    path('recipe/<int:pk>/', views.recipe_detail_view, name='recipe_detail'),
+    path('add_review/', views.add_review, name='add_review'),
+    path('about/about_viewmore', views.about_viewmore, name='about_viewmore'),
+    #path('save/', views.save_item, name='save_item'),
+    #path('wishlist/add/<int:item_id>/', views.add_to_wishlist, name='add_to_wishlist'),
+]
