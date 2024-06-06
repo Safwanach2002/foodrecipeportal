@@ -279,12 +279,12 @@ document.addEventListener('DOMContentLoaded', function() {
 function fetchRecipeDetails(recipeId) {
     var xhr = new XMLHttpRequest();
     xhr.open('GET', '/recipe/' + recipeId + '/', true);
-debugger
+
     xhr.onload = function() {
         if (xhr.status >= 200 && xhr.status < 400) {
             // Success response
             var response = xhr.responseText;
-            document.getElementById('hello').innerHTML = response;
+            document.getElementById(recipeId).innerHTML = response;
         } 
         else {
             // Error response
@@ -298,4 +298,35 @@ debugger
 
     xhr.send();
 }
+
+// Place this script in a separate JavaScript file or within a <script> tag at the end of your HTML body
+const searchForm = document.getElementById('searchForm');
+const searchInput = document.getElementById('searchQuery');
+const searchResultsContainer = document.getElementById('searchResults');
+
+searchForm.addEventListener('submit', function(event) {
+    event.preventDefault();
+    const searchQuery = searchInput.value.trim();
+    if (searchQuery.length > 0) {
+        fetch(`/search/?search_query=${encodeURIComponent(searchQuery)}`)
+            .then(response => response.json())
+            .then(data => {
+                // Clear previous search results
+                searchResultsContainer.innerHTML = '';
+
+                // Append new search results to the container
+                data.forEach(result => {
+                    const resultItem = document.createElement('div');
+                    resultItem.textContent = result.title; // Adjust as per your model fields
+                    searchResultsContainer.appendChild(resultItem);
+                });
+            })
+            .catch(error => {
+                console.error('Error fetching search results:', error);
+            });
+    } else {
+        // Clear search results container when search query is empty
+        searchResultsContainer.innerHTML = '';
+    }
+});
 

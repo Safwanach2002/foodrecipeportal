@@ -80,7 +80,6 @@
               {% csrf_token %}
               {{ search_form.as_p }}
               <div class="input-group">
-                <input type="search" name="search_query" class="form-control search-data" placeholder="search any recipe">
                 <div class="input-group-append">
                   <button type="submit" class="fa fa-search"></button>
                 </div>
@@ -138,7 +137,7 @@
                   <p>
                     Fluffy Chinese bao buns are steamed rolls with savory meats or sweet fillings, adored globally for their flavorful versatility.
                   </p>
-                  <button class="view-recipe-btn">View Recipe</button>
+                  <a class="view-recipe-btn" href="{% url 'recipe_detail' 10 %}">View Recipe</a>
                 </div>
               </div>
             </div>

@@ -84,7 +84,6 @@
               {% csrf_token %}
               {{ search_form.as_p }}
               <div class="input-group">
-                <input type="search" name="search_query" class="form-control search-data" placeholder="search any recipe">
                 <div class="input-group-append">
                   <button type="submit" class="fa fa-search"></button>
                 </div>
@@ -148,10 +147,11 @@
                     <p><strong>Instructions:</strong></p>
                     <p style="white-space: pre-wrap;">{{ recipe.instructions }}</p>
                     {% if recipe.video_link %}
+                        <!--iframe width="560" height="315" src="{{ recipe.video_link }}" frameborder="0" allowfullscreen></iframe-->
                         <div id="player"></div>
-                        <!--div style="position: relative; padding-bottom: 56.25%; margin-bottom: 20px;">
+                        <div style="position: relative; padding-bottom: 56.25%; margin-bottom: 20px;">
                             <iframe width="560" height="315" src="{{ recipe.video_link }}" frameborder="0" allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe>
-                        </div-->
+                        </div>
                     {% endif %}
                 </div>
             </div>

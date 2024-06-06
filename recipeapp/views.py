@@ -3,9 +3,10 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from django.http import HttpResponse, JsonResponse
 from .models import Recipe, Category, Ingredient, Review
-from .forms import RecipeSearchForm, ReviewForm
+from .forms import SearchForm, ReviewForm
 from rest_framework import generics
 from django.db.models import Avg
+from django.views import View
 from .serializers import CategorySerializer, IngredientSerializer, RecipeSerializer, ReviewSerializer
 from django.contrib.auth.decorators import login_required
 
@@ -28,19 +29,25 @@ def about(request):
 def about_viewmore(request):
     return render(request, 'about_viewmore.html')
 
-def search_results(request):
+"""def search_result(request):
     if request.method == 'GET':
-        search_form = RecipeSearchForm(request.GET)
+        form = SearchForm(request.GET)
+        results = []
+        query = ''
+        if form.is_valid():
+            query = form.cleaned_data['query']
+            # Perform the search
+            results = Recipe.objects.filter(title__icontains=query)
+        return render(request, 'search_result.html', {'form': form, 'results': results, 'query': query})"""
 
-        if search_form.is_valid():
-            search_query = search_form.cleaned_data['search_query']
-            recipes = Recipe.objects.filter(title__icontains=search_query)
+def search_results(request):
+    form = SearchForm(request.GET)
+    results = []
+    if form.is_valid():
+        search_query = form.cleaned_data['search_query']
+        results = Recipe.objects.filter(title__icontains=search_query)
+    return render(request, 'search_results.html', {'form': form, 'results': results})
 
-        return render(request, 'search_results.html', {'search_form': search_form, 'recipes': recipes})
-
-    return render(request, 'search_results.html', {'search_form': search_form})
-
-        
 def chicken(request):
     return render(request, 'chicken.html')
 
@@ -72,13 +79,22 @@ def koreanfood(request):
     return render(request, 'koreanfood.html')
 
 def spanishfood(request):
-    return render(request, 'koreanfood.html')
+    return render(request, 'spanishfood.html')
 
 def japanesefood(request):
     return render(request, 'japanesefood.html')
 
 def vietnamesefood(request):
     return render(request, 'vietnamesefood.html')
+
+def italianpizzas(request):
+    return render(request, 'italianpizzas.html')
+
+def indiancurrys(request):
+    return render(request, 'indiancurrys.html')
+
+def frenchpastries(request):
+    return render(request, 'frenchpastries.html')
 
 class CategoryListCreate(generics.ListCreateAPIView):
     queryset = Category.objects.all()
@@ -124,23 +140,6 @@ def get_recipe(request):
     context = {'recipe': recipe}
     return render(request, 'recipe_details.html', context)
 
-''''@login_required
-def add_review(request):
-    if request.method == 'POST':
-        # Process the form data and save the review
-        # Example code:
-        title = request.POST.get('review_title')
-        content = request.POST.get('review_content')
-        rating = request.POST.get('review_rating')
-        recipe_id = request.POST.get('recipe_id')
-
-        review = Review(title=title, content=content, rating=rating, recipe_id=recipe_id, user=request.user)
-        review.save()
-        return redirect('recipe_detail', recipe_id=recipe_id)  # Redirect to the recipe detail page
-
-    # Handle GET request or other cases
-    return render(request, 'index.html', context={})  # Repla'''
-
 
 @login_required
 def add_review(request):
@@ -161,3 +160,10 @@ def add_review(request):
     return render(request, 'recipe_detail.html', context)
     
     #return render(request, 'add_review.html', {'form': form})
+class SignInView(View):
+    def get(self, request):
+        return render(request, 'signin.html')
+
+class SignUpView(View):
+    def get(self, request):
+        return render(request, 'signup.html')

@@ -632,23 +632,15 @@ button {
 
 /* Styling the view recipe button */
 .view-recipe-btn {
+  display: inline-block;
+  padding: 8px 30px;
   background-color: #ffbe33;
   color: #ffffff;
+  border-radius: 45px;
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+  border: none;
 }
-
-/*.like-icon {
-  display: inline-block;
-  margin-top: 10px;
-  position: absolute;
-  top: 10px;
-  right: 10px;
-}
-
-.like-icon i {
-  color: #ffbe33; 
-  font-size: 24px;
-  padding: 10px;
-}*/
 
 /* Adding hover effect */
 .view-recipe-btn:hover {

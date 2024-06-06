@@ -45,10 +45,6 @@ class Review(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     content = models.TextField()
     rating = models.IntegerField(choices=[(i, i) for i in range(1, 6)])
-    """rating = models.IntegerField(choices=[
-        (1, '1 Star'), (2, '2 Stars'), (3, '3 Stars'),
-        (4, '4 Stars'), (5, '5 Stars')
-    ])"""
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

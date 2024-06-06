@@ -81,7 +81,7 @@
                 {% csrf_token %}
                 {{ search_form.as_p }}
                 <div class="input-group">
-                  <input type="search" name="search_query" class="form-control search-data" placeholder="search any recipe">
+                  <!--input type="search" name="search_query" class="form-control search-data" placeholder="search any recipe"-->
                   <div class="input-group-append">
                     <button type="submit" class="fa fa-search"></button>
                   </div>
@@ -130,7 +130,7 @@
                       Experience the culinary richness of India through our array of handcrafted curry creations, where each dish tells a story of tradition, flavor, and authenticity, inviting you to explore the vibrant palette of Indian spices and ingredients.
                     </p>
                     <div class="btn-box">
-                      <a href="" class="btn1">
+                      <a href="{% url 'indiancurrys' %}" class="btn1">
                         Taste India
                       </a>
                     </div>
@@ -151,7 +151,7 @@
                       Savor the essence of Italy with our classic pizza creations, crafted with authentic Italian ingredients and traditional techniques that capture the true taste of Italy's culinary heritage.
                     </p>
                     <div class="btn-box">
-                      <a href="" class="btn1">
+                      <a href="{% url 'italianpizzas' %}" class="btn1">
                         Pizza Paradise
                       </a>
                     </div>
@@ -172,7 +172,7 @@
                       Indulge in the exquisite craftsmanship of French pastries, where buttery croissants, delicate macarons, and flaky tarts transport you to the charming cafes of Paris with every delectable bite.
                     </p>
                     <div class="btn-box">
-                      <a href="" class="btn1">
+                      <a href="{% url 'frenchpastries' %}" class="btn1">
                         Divine Pastries
                       </a>
                     </div>
@@ -221,7 +221,7 @@
                     <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
                       <div class="explore-item text-center rounded overflow-hidden">
                         <div class="rounded-circle overflow-hidden m-4">
-                            <img class="img-fluid" src="{% static 'assets/images/team-2.jpeg' %}" alt="">
+                          <img class="img-fluid" src="{% static 'assets/images/team-2.jpeg' %}" alt="">
                         </div>
                         <h5 class="mb-0">Chinese</h5>
                         <small>Food</small>
@@ -268,7 +268,7 @@
                         <h5 class="mb-0">Korean</h5>
                         <small>Food</small>
                         <div class="btn-square">
-                          <a href="" class="button">
+                          <a href="{% url 'koreanfood' %}" class="button">
                             Explore Now
                           </a>
                         </div>
@@ -282,7 +282,7 @@
                         <h5 class="mb-0">Spanish</h5>
                         <small>Food</small>
                         <div class="btn-square">
-                          <a href="" class="button">
+                          <a href="{% url 'spanishfood' %}" class="button">
                             Explore Now
                           </a>
                         </div>
@@ -296,7 +296,7 @@
                         <h5 class="mb-0">Japanese</h5>
                         <small>Food</small>
                         <div class="btn-square">
-                          <a href="" class="button">
+                          <a href="{% url 'japanesefood' %}" class="button">
                             Explore Now
                           </a>
                         </div>
@@ -310,7 +310,7 @@
                         <h5 class="mb-0"> Vietnamese </h5>
                         <small>Food</small>
                         <div class="btn-square">
-                          <a href="" class="button">
+                          <a href="{% url 'spanishfood' %}" class="button">
                             Explore Now
                           </a>
                         </div>
@@ -357,7 +357,7 @@
                   <p>
                     Experience India's beloved Kande Poha: a flavorful breakfast staple with flattened rice, onions, and spices, perfect for a delightful start.
                   </p>
-                  <button class="view-recipe-btn" data-recipe-id="1">View Recipe</button>
+                  <a class="view-recipe-btn" href="{% url 'recipe_detail' 1 %}">View Recipe</a>
                 </div>
               </div>
             </div>
@@ -375,7 +375,7 @@
                   <p>
                     Experience Bangkok's iconic dish: Pad Thai. Rice noodles stir-fried with shrimp, tofu, and tamarind sauce, garnished with peanuts and bean sprouts—a true taste of Thailand.
                   </p>
-                  <button class="view-recipe-btn">View Recipe</button>
+                  <a class="view-recipe-btn" href="{% url 'recipe_detail' 2 %}">View Recipe</a>
                 </div>
               </div>
             </div>
@@ -393,7 +393,7 @@
                   <p>
                     Italian gourmet pizza elevates tradition with premium ingredients like truffles, prosciutto, arugula, and artisanal cheeses, offering a sophisticated flavor experience.
                   </p>
-                  <button class="view-recipe-btn">View Recipe</button>
+                  <a class="view-recipe-btn" href="{% url 'recipe_detail' 3 %}">View Recipe</a>
                 </div>
               </div>
             </div>
@@ -411,7 +411,7 @@
                   <p>
                     Experience Japanese authenticity: Meticulously crafted sushi embodies tradition. Indulge in Japan's essence with each bite.
                   </p>
-                  <button class="view-recipe-btn">View Recipe</button>
+                  <a class="view-recipe-btn" href="{% url 'recipe_detail' 4 %}">View Recipe</a>
                 </div>
               </div>
             </div>
@@ -429,7 +429,7 @@
                   <p>
                     Indulge in France's Culinary Tradition with our Exquisite Pastry, Blending Flaky Layers with Rich Chocolate for an Unforgettable Delight.
                   </p>
-                  <button class="view-recipe-btn">View Recipe</button>
+                  <a class="view-recipe-btn" href="{% url 'recipe_detail' 5 %}">View Recipe</a>
                 </div>
               </div>
             </div>
@@ -447,7 +447,7 @@
                   <p>
                     Experience the essence of Mexico's coast with our Fish Tacos recipe: crispy fish, crunchy slaw, and zesty sauce in warm tortillas.
                   </p>
-                  <button class="view-recipe-btn">View Recipe</button>
+                  <a class="view-recipe-btn" href="{% url 'recipe_detail' 6 %}">View Recipe</a>
                 </div>
               </div>
             </div>
@@ -465,7 +465,7 @@
                   <p>
                     Indulge in a taste of Greece with our Greek Yogurt Parfait, featuring creamy yogurt layered with fresh fruits and crunchy granola for a wholesome breakfast treat.
                   </p>
-                  <button class="view-recipe-btn">View Recipe</button>
+                  <a class="view-recipe-btn" href="{% url 'recipe_detail' 7 %}">View Recipe</a>
                 </div>
               </div>
             </div>
@@ -483,7 +483,7 @@
                   <p>
                     Savor the essence of Philippine cuisine with Pinakbet—a flavorful vegetable medley cooked in savory shrimp paste, a true taste of tradition.
                   </p>
-                  <button class="view-recipe-btn">View Recipe</button>
+                  <a class="view-recipe-btn" href="{% url 'recipe_detail' 8 %}">View Recipe</a>
                 </div>
               </div>
             </div>
@@ -501,14 +501,14 @@
                   <p>
                     Step into Spain's culinary world with our classic Paella recipe. Saffron-infused rice, seafood, chicken, and veggies come together in this Mediterranean masterpiece.
                   </p>
-                  <button class="view-recipe-btn">View Recipe</button>
+                  <a class="view-recipe-btn" href="{% url 'recipe_detail' 9 %}">View Recipe</a>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <button class="view-more-btn">View More</button>
+      <!--button class="view-more-btn">View More</button-->
     </div>
   </section>
 

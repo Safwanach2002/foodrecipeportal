@@ -29,6 +29,6 @@ class IngredientForm(forms.ModelForm):
         model = Ingredient
         fields = ['name']
 
-class RecipeSearchForm(forms.Form):
+class SearchForm(forms.Form):
     search_query = forms.CharField(label='Search any recipe', max_length=100)
     #search_query = forms.CharField(max_length=100, label='Search')

@@ -1,22 +1,3 @@
-"""from django.contrib import admin
-from .models import Category, Ingredient, Recipe, Review
-from .forms import ReviewForm
-# Register your models here.
-
-class RecipeAdmin(admin.ModelAdmin):
-    list_display = ['title', 'category', 'cook_time', 'created_at']
-    search_fields = ['title', 'category__name']
-    list_filter = ['category', 'created_at']
-    form = ReviewForm
-
-class ReviewAdmin(admin.ModelAdmin):
-    form = ReviewForm
-
-admin.site.register(Category)
-admin.site.register(Ingredient)
-admin.site.register(Recipe, RecipeAdmin)
-admin.site.register(Review, ReviewAdmin)"""
-
 from django.contrib import admin
 from .models import Recipe, Category, Ingredient, Review
 from .forms import RecipeForm, CategoryForm, IngredientForm, ReviewForm

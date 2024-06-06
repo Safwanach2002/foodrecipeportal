@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import path, include
 from .import views
 
 urlpatterns=[
@@ -6,7 +6,8 @@ urlpatterns=[
     path('new-recipes/', views.new_recipes, name='new_recipes'),
     path('ingredients/', views.ingredients, name='ingredients'),
     path('about/', views.about, name='about'),
-    path('search_results/', views.search_results, name='search_results'),
+    path('search/', views.search_results, name='search_results'),
+    #path('search_result/', views.search_result, name='search_result'),
     path('chicken/', views.chicken, name='chicken'),
     path('beef/', views.beef, name='beef'),
     path('seafood/', views.seafood, name='seafood'),
@@ -27,6 +28,11 @@ urlpatterns=[
     path('recipe/<int:pk>/', views.recipe_detail_view, name='recipe_detail'),
     path('add_review/', views.add_review, name='add_review'),
     path('about/about_viewmore', views.about_viewmore, name='about_viewmore'),
+    path('indiancurrys/', views.indiancurrys, name='indiancurrys'),
+    path('frenchpastries/', views.frenchpastries, name='frenchpastries'),
+    path('italianpizzas/', views.italianpizzas, name='italianpizzas'),
+    path('signin/', views.SignInView.as_view(), name='signin'),  
+    path('signup/', views.SignUpView.as_view(), name='signup'), 
     #path('save/', views.save_item, name='save_item'),
     #path('wishlist/add/<int:item_id>/', views.add_to_wishlist, name='add_to_wishlist'),
 ]
